@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calculadora de IMC</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			max-width: 500px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		input[type="number"] {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			box-sizing: border-box;
+			font-size: 16px;
+			background-color: #f7f7f7;
+			color: #555;
+			box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+		}
+
+		input[type="submit"] {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			background-color: #1abc9c;
+			color: #fff;
+			font-size: 18px;
+			cursor: pointer;
+			transition: background-color 0.2s ease-in-out;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #148f77;
+		}
+
+		.mensagem {
+			text-align: center;
+			margin-top: 20px;
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		.verde {
+			color: green;
+		}
+
+		.laranja {
+			color: orange;
+		}
+
+		.vermelho {
+			color: red;
+		}
+
+		footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+}
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Calculadora de IMC - Índice de Massa Corporal</h1>
+		<form id="form-imc">
+			<label for="peso">Peso (kg)</label>
+			<input type="number" id="peso" required>
+
+			<label for="altura">Altura (m)</label>
+			<input type="number" step="0.01" id="altura" required>
+
+			<input type="submit" value="Calcular">
+		</form>
+
+		<div id="resultado">
+			<p class="mensagem" id="mensagem"></p>
+			<p class="resultado" id="valor-imc"></p>
+			<p class="resultado" id="classificacao"></p>
+			<p class="resultado" id="peso-ideal"></p>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById("form-imc").addEventListener("submit", function(event) {
+			event.preventDefault();
+
+			var peso = parseFloat(document.getElementById("peso").value);
+			var altura = parseFloat(document.getElementById("altura").value);
+
+			var imc = peso / (altura * altura);
+
+			var mensagem, classificacao, pesoIdeal
+			if (imc < 18.5) {
+			mensagem = "Abaixo do peso";
+			classificacao = "Você está abaixo do peso ideal";
+			pesoIdeal = "Seu peso ideal está entre " + (18.5 * altura * altura).toFixed(1) + "kg e " + (24.9 * altura * altura).toFixed(1) + "kg";
+			document.getElementById("mensagem").className = "vermelho";
+			document.getElementById("valor-imc").className = "vermelho";
+			document.getElementById("classificacao").className = "vermelho";
+			document.getElementById("peso-ideal").className = "vermelho";
+		} else if (imc < 25) {
+			mensagem = "Peso normal";
+			classificacao = "Você está no peso ideal";
+			pesoIdeal = "Parabéns, continue assim!";
+			document.getElementById("mensagem").className = "verde";
+			document.getElementById("valor-imc").className = "verde";
+			document.getElementById("classificacao").className = "verde";
+			document.getElementById("peso-ideal").className = "verde";
+		} else if (imc < 30) {
+			mensagem = "Acima do peso";
+			classificacao = "Você está um pouco acima do peso ideal";
+			pesoIdeal = "Seu peso ideal está entre " + (18.5 * altura * altura).toFixed(1) + "kg e " + (24.9 * altura * altura).toFixed(1) + "kg";
+			document.getElementById("mensagem").className = "laranja";
+			document.getElementById("valor-imc").className = "laranja";
+			document.getElementById("classificacao").className = "laranja";
+			document.getElementById("peso-ideal").className = "laranja";
+		} else {
+			mensagem = "Obesidade";
+			classificacao = "Você está acima do peso ideal";
+			pesoIdeal = "Seu peso ideal está entre " + (18.5 * altura * altura).toFixed(1) + "kg e " + (24.9 * altura * altura).toFixed(1) + "kg";
+			document.getElementById("mensagem").className = "vermelho";
+			document.getElementById("valor-imc").className = "vermelho";
+			document.getElementById("classificacao").className = "vermelho";
+			document.getElementById("peso-ideal").className = "vermelho";
+		}
+
+		document.getElementById("mensagem").innerHTML = mensagem;
+		document.getElementById("valor-imc").innerHTML = "Seu IMC é " + imc.toFixed(1);
+		document.getElementById("classificacao").innerHTML = classificacao;
+		document.getElementById("peso-ideal").innerHTML = pesoIdeal;
+	});
+</script>
+</body>
+<footer>
+	<p>Direitos autorais 2023 André Souza | Produzido com auxílio do ChatGPT</p>
+  </footer>
+  
+</html>
+
